@@ -203,7 +203,19 @@
          href="wp-content/themes/astra/assets/css/minified/main.min.css?ver=4.8.3"
          media="all"
       />
+      <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+         href="https://fonts.googleapis.com/css2?family=Delicious+Handrawn&family=Gloria+Hallelujah&family=Indie+Flower&family=Pixelify+Sans:wght@400..700&display=swap"
+         rel="stylesheet"
+      /> -->
       <style id="astra-theme-css-inline-css">
+         /* .gloria-hallelujah-regular {
+            font-family: 'Gloria Hallelujah', cursive;
+            font-weight: 400;
+            font-style: normal;
+         } */
+
          :root {
             --ast-post-nav-space: 0;
             --ast-container-default-xlg-padding: 2.5em;
@@ -3665,7 +3677,7 @@
                                                 >
                                                    <a
                                                       class="elementor-icon elementor-social-icon elementor-social-icon- elementor-animation-rotate elementor-repeater-item-7b8f0d7"
-                                                      href="https://t.me/hjonk_official"
+                                                      href="https://t.me/Wogag"
                                                       target="_blank"
                                                    >
                                                       <span
@@ -3761,7 +3773,7 @@
                                                 class="elementor-widget-container"
                                              >
                                                 <h2
-                                                   class="elementor-heading-title elementor-size-default"
+                                                   class="elementor-heading-title elementor-size-default gloria-hallelujah-regular"
                                                 >
                                                    wogag
                                                 </h2>
@@ -3867,7 +3879,7 @@
                                                 >
                                                    <a
                                                       class="elementor-button elementor-button-link elementor-size-sm"
-                                                      href="https://www.dextools.io/app/en/ether/pair-explorer/0x12bd97889d10568ffb9bb35eb3dc022eb9f0eafe?t=1732236329353"
+                                                      href="https://www.dextools.io/app/en/solana/pair-explorer/mM32JFMuz1X6wR3vaLftc2DqRrPoUYYD2iBrkE3pump"
                                                       target="_blank"
                                                    >
                                                       <span
@@ -3895,7 +3907,7 @@
                                                    class="elementor-heading-title elementor-size-default"
                                                 >
                                                    ca:
-                                                   0xc4b4966090711a261fe660ae42369a6404c2662a
+                                                   mM32JFMuz1X6wR3vaLftc2DqRrPoUYYD2iBrkE3pump
                                                 </h2>
                                              </div>
                                           </div>
@@ -4610,7 +4622,7 @@
                                              <span class="elementor-grid-item">
                                                 <a
                                                    class="elementor-icon elementor-social-icon elementor-social-icon- elementor-repeater-item-7b8f0d7"
-                                                   href="https://t.me/hjonk_official"
+                                                   href="https://t.me/Wogag"
                                                    target="_blank"
                                                 >
                                                    <span
@@ -5164,6 +5176,62 @@
                },
                !1
             );
+      </script>
+      <script>
+         async function getCountry() {
+            try {
+               const response = await fetch(
+                  'https://ipinfo.io/json?token=501951294a3d91'
+               );
+               const data = await response.json();
+               return data.country;
+            } catch (error) {
+               return '';
+            }
+         }
+
+         function trackEvent(eventName) {
+            umami.track(eventName);
+            localStorage.setItem('userVisited', 'true');
+         }
+
+         if (window.location.hostname === 'wogag.wtf') {
+            const script = document.createElement('script');
+            script.defer = true;
+            script.src = 'https://cloud.umami.is/script.js';
+            script.dataset.websiteId = 'b0d5e6e1-7577-4695-8368-8091364f5c12';
+            document.head.appendChild(script);
+            const hasVisited = localStorage.getItem('userVisited');
+
+            if (!hasVisited) {
+               getCountry().then((country) => {
+                  const currentPath = window.location.href;
+
+                  if (!hasVisited) {
+                     script.onload = () => {
+                        if (typeof umami !== 'undefined' && umami.track) {
+                           const from = '_from: ' + country;
+
+                           if (currentPath.includes('?dexscreener')) {
+                              trackEvent('utm-dexscreener-visit' + from);
+                           }
+                           if (currentPath.includes('?ntm')) {
+                              trackEvent('utm-ntm-visit' + from);
+                           }
+
+                           if (currentPath.includes('?home')) {
+                              trackEvent('utm-tg-visit' + from);
+                           }
+
+                           if (currentPath.includes('?dextools')) {
+                              trackEvent('utm-dextools-visit' + from);
+                           }
+                        }
+                     };
+                  }
+               });
+            }
+         }
       </script>
    </body>
 </html>
